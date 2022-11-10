@@ -40,7 +40,23 @@ export default {
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    '@nuxtjs/firebase'
   ],
+
+  firebase: {
+    config: {
+      apiKey: "AIzaSyA3sPnLS8TO6TsvVd0etX6YaC8MfP0Vm54",
+      authDomain: "feedback-log.firebaseapp.com",
+      projectId: "feedback-log",
+      storageBucket: "feedback-log.appspot.com",
+      messagingSenderId: "164044409573",
+      appId: "1:164044409573:web:38e079fd493b3ba360e20c",
+      measurementId: "G-FJRTFDGQRD"
+    },
+    services: {
+      auth: true
+    }
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

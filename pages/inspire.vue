@@ -11,11 +11,22 @@
         </footer>
       </blockquote>
     </v-col>
+    <v-col>
+      <v-btn @click.native="registerUser()">
+        Register User
+      </v-btn>
+    </v-col>
   </v-row>
 </template>
 
 <script>
 export default {
   name: 'InspirePage',
+
+  methods: {
+    registerUser: async function () {
+      await this.$fire.auth.createUserWithEmailAndPassword('foo@foo.foo', 'test123')
+    }
+  }
 }
 </script>

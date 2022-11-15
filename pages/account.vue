@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: 'InspirePage',
+  name: 'AccountPage',
 
   methods: {
     registerUser: async function () {

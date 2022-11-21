@@ -4,27 +4,35 @@
       <!-- <h4 onclick="window.print();">Print</h4>
 
       <button @click="createpdf()">Create pdf</button> -->
-
+      <v-row>
+        <v-file-input
+          v-model="chosenFile"
+          chips
+          label="Feedback log file"
+          accept="application/JSON"
+        ></v-file-input>
+        <v-btn class="mx-5 my-5" @click.native="readFile">Overwrite</v-btn>
+      </v-row>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-card class="px-5">
           <v-card-title>Initial state</v-card-title>
 
           <v-textarea
-            v-model="initialState.data"
+            v-model="data.initialState.data"
             label="Data"
             rows="1"
             auto-grow
             required
           />
           <v-textarea
-            v-model="initialState.model"
+            v-model="data.initialState.model"
             label="Model"
             rows="1"
             auto-grow
             required
           />
           <v-textarea
-            v-model="initialState.metrics"
+            v-model="data.initialState.metrics"
             label="Metrics"
             rows="1"
             auto-grow
@@ -36,7 +44,7 @@
           <v-card-title>Records</v-card-title>
 
           <v-expansion-panels multiple>
-            <v-expansion-panel v-for="(record, i) in records" :key="i">
+            <v-expansion-panel v-for="(record, i) in data.records" :key="i">
               <v-expansion-panel-header
                 >Record {{ i + 1 }}</v-expansion-panel-header
               >
@@ -111,21 +119,21 @@
           <v-card-title>Final state</v-card-title>
 
           <v-textarea
-            v-model="finalState.data"
+            v-model="data.finalState.data"
             label="Data"
             rows="1"
             auto-grow
             required
           />
           <v-textarea
-            v-model="finalState.model"
+            v-model="data.finalState.model"
             label="Model"
             rows="1"
             auto-grow
             required
           />
           <v-textarea
-            v-model="finalState.metrics"
+            v-model="data.finalState.metrics"
             label="Metric performance"
             rows="1"
             auto-grow
@@ -149,39 +157,42 @@ export default {
       valid: false,
       dialog: false,
       recordIndex: -1,
-      initialState: {
-        data: '',
-        model: '',
-        metrics: '',
-      },
-      finalState: {
-        data: '',
-        model: '',
-        metrics: '',
-      },
-      records: [
-        {
-          prompt: '',
-          sharedInformation: '',
-          responseExpert: '',
-          updateSummary: '',
-          updates: [
-            {
-              what: 'what',
-              where: '',
-              when: '',
-              why: '',
-              impact: '',
-            },
-          ],
+      data: {
+        initialState: {
+          data: '',
+          model: '',
+          metrics: '',
         },
-      ],
+        finalState: {
+          data: '',
+          model: '',
+          metrics: '',
+        },
+        records: [
+          {
+            prompt: '',
+            sharedInformation: '',
+            responseExpert: '',
+            updateSummary: '',
+            updates: [
+              {
+                what: 'what',
+                where: '',
+                when: '',
+                why: '',
+                impact: '',
+              },
+            ],
+          },
+        ],
+      },
+      chosenFile: null,
     }
   },
 
   methods: {
     newRecord() {
-      this.records.push({})
+      this.data.records.push({})
     },
 
     openDialog(i) {
@@ -190,12 +201,26 @@ export default {
     },
 
     deleteItemConfirm() {
-      this.records.splice(this.recordIndex, 1)
+      this.data.records.splice(this.recordIndex, 1)
       this.closeDialog()
     },
 
     closeDialog() {
       this.dialog = false
+    },
+
+    readFile() {
+      if (!this.chosenFile) {
+        return
+      }
+      const reader = new FileReader()
+
+      // Use the javascript reader object to load the contents
+      // of the file in the v-model prop
+      reader.readAsText(this.chosenFile)
+      reader.onload = () => {
+        this.data = JSON.parse(reader.result)
+      }
     },
 
     createpdf: function () {

@@ -1,6 +1,11 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
+    <v-card>
+      <v-card-title>Feedback log</v-card-title>
+      <v-card-content> Some text here... </v-card-content>
+    </v-card>
+
+    <!-- <v-col cols="12" sm="8" md="6">
       <v-card class="logo py-4 d-flex justify-center">
         <NuxtLogo />
         <VuetifyLogo />
@@ -76,7 +81,7 @@
           <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
         </v-card-actions>
       </v-card>
-    </v-col>
+    </v-col> -->
   </v-row>
 </template>
 

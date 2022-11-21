@@ -7,7 +7,7 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - feedback-log',
-    title: 'feedback-log',
+    title: 'Feedback Log',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -85,6 +85,14 @@ export default {
         },
       },
     },
+  },
+
+  // Enable devtools: https://stackoverflow.com/questions/53346558/vue-devtools-always-disabled-with-nuxt-js
+  vue: {
+    config: {
+      productionTip: false,
+      devtools: true
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

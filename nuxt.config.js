@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - feedback-log',
+    // titleTemplate: '%s - feedback-log',
     title: 'Feedback Log',
     meta: [
       { charset: 'utf-8' },

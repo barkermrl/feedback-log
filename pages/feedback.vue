@@ -37,9 +37,9 @@
 
           <v-expansion-panels multiple>
             <v-expansion-panel v-for="(record, i) in records" :key="i">
-              <v-expansion-panel-header>{{
-                record.name
-              }}</v-expansion-panel-header>
+              <v-expansion-panel-header
+                >Record {{ i + 1 }}</v-expansion-panel-header
+              >
               <v-expansion-panel-content>
                 <v-textarea
                   v-model="record.prompt"
@@ -62,13 +62,49 @@
                   auto-grow
                   required
                 />
-                <v-data-table
-                  :headers="updateHeaders"
-                  :items="record.updates"
+                <UpdateTable :updates="record.updates" />
+                <v-textarea
+                  v-model="record.updateSummary"
+                  label="Update summary"
+                  rows="1"
+                  auto-grow
+                  required
                 />
+                <v-row>
+                  <v-btn
+                    color="error"
+                    dark
+                    class="ml-auto mb-2 mr-5"
+                    @click.native="openDialog(i)"
+                  >
+                    Delete Record
+                  </v-btn>
+                </v-row>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
+
+          <v-dialog v-model="dialog" max-width="600px">
+            <v-card>
+              <v-card-title class="text-h5"
+                >Are you sure you want to delete this record?</v-card-title
+              >
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="closeDialog"
+                  >Cancel</v-btn
+                >
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                  >OK</v-btn
+                >
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+          <v-btn color="primary" dark class="mt-5" @click.native="newRecord"
+            >New record</v-btn
+          >
         </v-card>
 
         <v-card class="px-5">
@@ -108,9 +144,11 @@ import autoTable from 'jspdf-autotable'
 export default {
   name: 'FeedbackPage',
 
-  data() {
+  data: function () {
     return {
       valid: false,
+      dialog: false,
+      recordIndex: -1,
       initialState: {
         data: '',
         model: '',
@@ -121,26 +159,45 @@ export default {
         model: '',
         metrics: '',
       },
-      updateHeaders: [
-        { text: 'What?', value: 'what' },
-        { text: 'Where?', value: 'where' },
-        { text: 'When?', value: 'when' },
-        { text: 'Why?', value: 'why' },
-        { text: 'Impact', value: 'impact' },
-      ],
       records: [
         {
-          name: 'Feedback 1',
           prompt: '',
           sharedInformation: '',
           responseExpert: '',
-          updates: [{ what: 'what' }],
+          updateSummary: '',
+          updates: [
+            {
+              what: 'what',
+              where: '',
+              when: '',
+              why: '',
+              impact: '',
+            },
+          ],
         },
       ],
     }
   },
 
   methods: {
+    newRecord() {
+      this.records.push({})
+    },
+
+    openDialog(i) {
+      this.recordIndex = i
+      this.dialog = true
+    },
+
+    deleteItemConfirm() {
+      this.records.splice(this.recordIndex, 1)
+      this.closeDialog()
+    },
+
+    closeDialog() {
+      this.dialog = false
+    },
+
     createpdf: function () {
       // eslint-disable-next-line new-cap
       const doc = new jsPDF()

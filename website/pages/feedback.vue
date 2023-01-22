@@ -4,6 +4,9 @@
       <!-- <h4 onclick="window.print();">Print</h4>
 
       <button @click="createpdf()">Create pdf</button> -->
+      <v-alert v-model="alert" dismissible type="warning"
+        >Please upload a file first!</v-alert
+      >
       <v-row>
         <v-file-input
           v-model="chosenFile"
@@ -11,7 +14,8 @@
           label="Feedback log file"
           accept="application/JSON"
         ></v-file-input>
-        <v-btn class="mx-5 my-5" @click.native="readFile">Overwrite</v-btn>
+        <v-btn class="mx-5 my-5" @click.native="readFile">Load Log</v-btn>
+        <v-btn class="mx-5 my-5" @click.native="downloadFile">Save Log</v-btn>
       </v-row>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-card class="px-5">
@@ -157,6 +161,7 @@ export default {
       valid: false,
       dialog: false,
       recordIndex: -1,
+      alert: false,
       data: {
         initialState: {
           data: '',
@@ -211,8 +216,10 @@ export default {
 
     readFile() {
       if (!this.chosenFile) {
+        this.alert = true
         return
       }
+      this.alert = false
       const reader = new FileReader()
 
       // Use the javascript reader object to load the contents
@@ -223,7 +230,21 @@ export default {
       }
     },
 
-    createpdf: function () {
+    downloadFile() {
+      const exportObj = this.data
+      const exportName = 'Feedback log'
+      const dataStr =
+        'data:text/json;charset=utf-8,' +
+        encodeURIComponent(JSON.stringify(exportObj))
+      const downloadAnchorNode = document.createElement('a')
+      downloadAnchorNode.setAttribute('href', dataStr)
+      downloadAnchorNode.setAttribute('download', exportName + '.json')
+      document.body.appendChild(downloadAnchorNode) // required for firefox
+      downloadAnchorNode.click()
+      downloadAnchorNode.remove()
+    },
+
+    createpdf() {
       // eslint-disable-next-line new-cap
       const doc = new jsPDF()
 

@@ -1,0 +1,29 @@
+{
+  "initialState": {
+    "data": "data",
+    "model": "resnet",
+    "metrics": "Robustness 5%"
+  },
+  "finalState": {
+    "data": "data",
+    "model": "resnet",
+    "metrics": "Robustness 10%"
+  },
+  "records": [
+    {
+      "prompt": "Poor accuracy",
+      "sharedInformation": "Prediction, input pairs",
+      "responseExpert": "Overconfident predictions",
+      "updateSummary": "Data augmentations",
+      "updates": [
+        {
+          "what": "CutMix",
+          "where": "Dataset",
+          "when": "Before training",
+          "why": "Background insensitivity",
+          "impact": "Robustness +5%"
+        }
+      ]
+    }
+  ]
+}

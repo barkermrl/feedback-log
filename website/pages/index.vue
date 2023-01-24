@@ -30,7 +30,7 @@
           <li>
             A command line interface (CLI) designed for use by practitioners to
             track updates to code based on expert feedback. Accessible in the
-            GiHub repo
+            GitHub repo
             <a
               href="https://github.com/barkermrl/feedback-log"
               target="_blank"

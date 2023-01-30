@@ -1,9 +1,6 @@
 <template>
   <v-row>
     <v-col>
-      <!-- <h4 onclick="window.print();">Print</h4>
-
-      <button @click="createpdf()">Create pdf</button> -->
       <v-alert v-model="alert" dismissible type="warning"
         >Please upload a file first!</v-alert
       >
@@ -150,9 +147,6 @@
 </template>
 
 <script>
-import { jsPDF } from 'jspdf'
-import autoTable from 'jspdf-autotable'
-
 export default {
   name: 'FeedbackPage',
 
@@ -242,43 +236,6 @@ export default {
       document.body.appendChild(downloadAnchorNode) // required for firefox
       downloadAnchorNode.click()
       downloadAnchorNode.remove()
-    },
-
-    createpdf() {
-      // eslint-disable-next-line new-cap
-      const doc = new jsPDF()
-
-      // From Javascript
-      let finalY = doc.lastAutoTable.finalY || 10
-      doc.text('From javascript arrays', 14, finalY + 15)
-      autoTable(doc, {
-        startY: finalY + 20,
-        head: [['ID', 'Name', 'Email', 'Country', 'IP-address']],
-        body: [
-          ['1', 'Donna', 'dmoore0@furl.net', 'China', '211.56.242.221'],
-          ['2', 'Janice', 'jhenry1@theatlantic.com', 'Ukraine', '38.36.7.199'],
-          [
-            '3',
-            'Ruth',
-            'rwells2@constantcontact.com',
-            'Trinidad and Tobago',
-            '19.162.133.184',
-          ],
-          ['4', 'Jason', 'jray3@psu.edu', 'Brazil', '10.68.11.42'],
-          ['5', 'Jane', 'jstephens4@go.com', 'United States', '47.32.129.71'],
-          ['6', 'Adam', 'anichols5@com.com', 'Canada', '18.186.38.37'],
-        ],
-      })
-
-      finalY = doc.lastAutoTable.finalY
-      doc.text('From HTML with CSS', 14, finalY + 15)
-      // doc.autoTable({
-      //     startY: finalY + 20,
-      //     html: '.table',
-      //     useCss: true,
-      // })
-
-      doc.output('dataurlnewwindow')
     },
   },
 }

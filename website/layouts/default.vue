@@ -56,6 +56,11 @@ export default {
         },
         {
           icon: 'mdi-script-text',
+          title: 'Example log',
+          to: '/example',
+        },
+        {
+          icon: 'mdi-script-text',
           title: 'Feedback log',
           to: '/feedback',
         },

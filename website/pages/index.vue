@@ -24,8 +24,10 @@
         <ol>
           <li>
             This web interface to view and update feedback logs, designed for
-            use by experts and machine learning practioners. Accessible on the
-            website <NuxtLink to="/feedback">here</NuxtLink>.
+            use by experts and machine learning practioners. An example log
+            based on TV content recommendation is accessible
+            <NuxtLink to="/example">here</NuxtLink>, while a blank log for you
+            to fill out is available <NuxtLink to="/feedback">here</NuxtLink>.
           </li>
           <li>
             A command line interface (CLI) designed for use by practitioners to
@@ -42,7 +44,8 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn color="primary" nuxt to="/feedback"> Continue </v-btn>
+        <v-btn color="primary" nuxt to="/example">Example</v-btn>
+        <v-btn color="primary" nuxt to="/feedback">Make my own</v-btn>
       </v-card-actions>
     </v-card>
   </v-col>
